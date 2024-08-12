@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { User } from '../../model/user';
+import { User } from '../../types/user';
 import { UserService } from '../../service/UserService/user-service.service';
 import { ModalComponent } from "../modal/modal.component";
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ModalService } from '../../service/Modal/modal.service';
+import { Store } from '@ngrx/store';
+import { createUser } from '../../states/users/action';
 
 @Component({
   selector: 'app-add-user-modal',
@@ -16,6 +18,7 @@ export class AddUserModalComponent {
 
   userService = inject(UserService);
   modalService = inject(ModalService);
+  store = inject(Store);
 
   isSubmitting: boolean = false;
 
@@ -46,39 +49,42 @@ export class AddUserModalComponent {
   onSubmit(addUserForm: NgForm): void {
     this.isSubmitting = true;
     if (addUserForm.valid) {
-      this.userService.addUser(this.user).subscribe(success => {
-        if (success) {
-          this.user = { 
-            id: 0,
-            name: "",
-            username: "",
-            email: "",
-            address: {
-              street: "",
-              suite: "",
-              city: "",
-              zipcode: "",
-              geo: {
-                lat: "",
-                lng: "",
-              }
-            },
-            phone: "",
-            website: "",
-            company: {
-              name: "",
-              catchPhrase: "",
-              bs: "",
-            }
-          };
+      // this.userService.addUser(this.user).subscribe(success => {
+      //   if (success) {
+      //     this.user = { 
+      //       id: 0,
+      //       name: "",
+      //       username: "",
+      //       email: "",
+      //       address: {
+      //         street: "",
+      //         suite: "",
+      //         city: "",
+      //         zipcode: "",
+      //         geo: {
+      //           lat: "",
+      //           lng: "",
+      //         }
+      //       },
+      //       phone: "",
+      //       website: "",
+      //       company: {
+      //         name: "",
+      //         catchPhrase: "",
+      //         bs: "",
+      //       }
+      //     };
 
-          this.isSubmitting = false;
-          this.onClose();
-        } else {
-          this.isSubmitting = false;
-          alert("Error while adding user");
-        }
-      });
+      //     this.isSubmitting = false;
+      //     this.onClose();
+      //   } else {
+      //     this.isSubmitting = false;
+      //     alert("Error while adding user");
+      //   }
+      // });
+      this.store.dispatch(createUser({ user: this.user}));
+      this.onClose();
+      
     } else {
       alert('Form is not valid');
     }

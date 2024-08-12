@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter, ViewChild, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs';
-import { User } from '../../model/user';
+import { User } from '../../types/user';
 
 @Injectable({
   providedIn: 'root'
