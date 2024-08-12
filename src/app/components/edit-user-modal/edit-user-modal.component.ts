@@ -23,7 +23,9 @@ export class EditUserModalComponent implements OnInit{
   isSubmitting: boolean = false;
 
   ngOnInit(): void {
-    this.user = this.modalService.selectedUser;
+    if (this.modalService.selectedUser) {
+      this.user = { ...this.modalService.selectedUser };
+    }
   }
 
   onSubmit(editUserForm: NgForm): void {
