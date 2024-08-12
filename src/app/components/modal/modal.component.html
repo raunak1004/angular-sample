@@ -1,0 +1,16 @@
+<div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+<div class="fixed inset-0 flex items-center justify-center p-4 animate-bounceIn">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
+    <div class="flex justify-between items-center">
+      <h3 class="text-2xl font-medium">{{ title }}</h3>
+      <button (click)="onClose()" class="text-gray-400 hover:text-gray-600">
+        <p class="text-2xl">&times;</p>
+      </button>
+    </div>
+
+    <div class="mt-8 max-h-[80vh] overflow-auto">
+      <ng-container *ngComponentOutlet="content" #content></ng-container>
+    </div>
+  </div>
+</div>
