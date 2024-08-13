@@ -1,18 +1,19 @@
 // reducer.ts
 import { createFeature, createReducer, on } from '@ngrx/store';
 import {
-  fetchAllUsers,
-  fetchAllUsersSuccess,
-  fetchAllUsersFailure,
-  createUser,
-  createUserSuccess,
-  createUserFailure,
-  updateUser,
-  updateUserSuccess,
-  updateUserFailure,
-  deleteUser,
-  deleteUserSuccess,
-  deleteUserFailure
+  userAction,
+  // fetchAllUsers,
+  // fetchAllUsersSuccess,
+  // fetchAllUsersFailure,
+  // createUser,
+  // createUserSuccess,
+  // createUserFailure,
+  // updateUser,
+  // updateUserSuccess,
+  // updateUserFailure,
+  // deleteUser,
+  // deleteUserSuccess,
+  // deleteUserFailure,
 } from './action';
 import { UserState } from '../user.state';
 
@@ -27,73 +28,73 @@ const userFeature = createFeature({
   reducer: createReducer(
     initialState,
 
-    on(fetchAllUsers, state => ({
+    on(userAction.fetchAllUsers, state => ({
       ...state,
       loading: true,
       error: null
     })),
 
-    on(fetchAllUsersSuccess, (state, { users }) => ({
+    on(userAction.fetchAllUsersSuccess, (state, { users }) => ({
       ...state,
       users,
       loading: false
     })),
 
-    on(fetchAllUsersFailure, (state, { error }) => ({
+    on(userAction.fetchAllUsersFailure, (state, { error }) => ({
       ...state,
       loading: false,
       error
     })),
 
-    on(createUser, state => ({
+    on(userAction.createUser, state => ({
       ...state,
       loading: true,
       error: null
     })),
 
-    on(createUserSuccess, (state, { user }) => ({
+    on(userAction.createUserSuccess, (state, { user }) => ({
       ...state,
       users: [...state.users, user],
       loading: false
     })),
 
-    on(createUserFailure, (state, { error }) => ({
+    on(userAction.createUserFailure, (state, { error }) => ({
       ...state,
       loading: false,
       error
     })),
 
-    on(updateUser, state => ({
+    on(userAction.updateUser, state => ({
       ...state,
       loading: true,
       error: null
     })),
 
-    on(updateUserSuccess, (state, { user }) => ({
+    on(userAction.updateUserSuccess, (state, { user }) => ({
       ...state,
       users: state.users.map(u => u.id === user.id ? user : u),
       loading: false
     })),
 
-    on(updateUserFailure, (state, { error }) => ({
+    on(userAction.updateUserFailure, (state, { error }) => ({
       ...state,
       loading: false,
       error
     })),
 
-    on(deleteUser, state => ({
+    on(userAction.deleteUser, state => ({
       ...state,
       loading: true,
       error: null
     })),
 
-    on(deleteUserSuccess, (state, { id }) => ({
+    on(userAction.deleteUserSuccess, (state, { id }) => ({
       ...state,
       users: state.users.filter(user => user.id !== id),
       loading: false
     })),
 
-    on(deleteUserFailure, (state, { error }) => ({
+    on(userAction.deleteUserFailure, (state, { error }) => ({
       ...state,
       loading: false,
       error
@@ -101,4 +102,4 @@ const userFeature = createFeature({
   )
 });
 
-export const { name: userFeatureKey, reducer: userReducer } = userFeature;
+export const { name: userFeatureKey, reducer: userReducer, selectLoading: getLoading, selectError: getUsersError, selectUsers: getAllUsers } = userFeature;

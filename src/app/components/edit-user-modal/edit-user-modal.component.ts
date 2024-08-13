@@ -4,7 +4,7 @@ import { ModalService } from '../../service/Modal/modal.service';
 import { User } from '../../types/user';
 import { UserService } from '../../service/UserService/user-service.service';
 import { Store } from '@ngrx/store';
-import { updateUser } from '../../states/users/action';
+import { userAction } from '../../states/users/action';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -64,7 +64,7 @@ export class EditUserModalComponent implements OnInit{
       //     alert("Error while updating user");
       //   }
       // });
-      this.store.dispatch(updateUser({ user: this.user }));
+      this.store.dispatch(userAction.updateUser({ user: this.user }));
       this.onClose();
     } else {
       alert('Form is not valid');

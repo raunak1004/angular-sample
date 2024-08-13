@@ -6,7 +6,7 @@ import { ModalComponent } from "../modal/modal.component";
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ModalService } from '../../service/Modal/modal.service';
 import { Store } from '@ngrx/store';
-import { createUser } from '../../states/users/action';
+import { userAction } from '../../states/users/action';
 
 @Component({
   selector: 'app-add-user-modal',
@@ -82,7 +82,7 @@ export class AddUserModalComponent {
       //     alert("Error while adding user");
       //   }
       // });
-      this.store.dispatch(createUser({ user: this.user}));
+      this.store.dispatch(userAction.createUser({ user: this.user}));
       this.onClose();
       
     } else {

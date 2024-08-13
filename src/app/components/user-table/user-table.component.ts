@@ -7,14 +7,13 @@ import { ModalComponent } from "../modal/modal.component";
 import { EditUserModalComponent } from "../edit-user-modal/edit-user-modal.component";
 import { select, Store } from '@ngrx/store';
 import {
-  fetchAllUsers,
-  deleteUser
+  userAction
 } from '../../states/users/action';
 import {
   getAllUsers,
   getUsersError,
   getLoading
-} from '../../states/users/selector';
+} from '../../states/users/reducer';
 
 @Component({
   selector: 'app-user-table',
@@ -54,7 +53,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
     //   }
     // });
 
-    this.store.dispatch(fetchAllUsers());
+    this.store.dispatch(userAction.fetchAllUsers());
 
     this.userSubscription = this.store.pipe(select(getAllUsers)).subscribe(users => {
       if (users) {
@@ -63,7 +62,6 @@ export class UserTableComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Subscribe to error state from the store
     this.errorSubscription = this.store.pipe(select(getUsersError)).subscribe(error => {
       if (error) {
         this.isLoading = false;
@@ -72,7 +70,6 @@ export class UserTableComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Subscribe to loading state from the store
     this.loadingSubscription = this.store.pipe(select(getLoading)).subscribe(loading => {
       this.isLoading = loading;
     });
@@ -99,7 +96,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
     //   else alert("Error while deleting user!");
     // });
 
-    this.store.dispatch(deleteUser({ id }));
+    this.store.dispatch(userAction.deleteUser({ id }));
   }
 
   openModal(contentComponent: any, user: User) {
